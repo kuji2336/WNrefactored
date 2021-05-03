@@ -1,26 +1,53 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+<the-header></the-header>
+<router-view></router-view>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import firebase from "firebase/app"
+import TheHeader from "./Layouts/TheHeader"
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    TheHeader
+  },
+
+
+     created(){
+    firebase.auth().onAuthStateChanged((user)=>{
+       if(user){
+          console.log(user)
+          this.$store.state.userIsLogined = true;
+          this.$store.state.LoginedUserName = user.displayName
+       }
+    })
   }
+
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
+
+p{
+  margin: 0;
+}
+a{
+      text-decoration: none;
+      color: inherit;
+  }
+
+  a:hover{
+      text-decoration: none;
+      color: inherit;
+  }
+
+  .router-link-active {
+    color: #dc3545 !important;
+    text-decoration: underline;
+  }
 </style>
